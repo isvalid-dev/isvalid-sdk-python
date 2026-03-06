@@ -84,7 +84,7 @@ class HttpClient:
             ):
                 retry_after = response.headers.get("Retry-After")
                 if retry_after:
-                    delay = int(retry_after)
+                    delay = float(retry_after)
                 else:
                     delay = _backoff_delay(
                         attempt, self._retry.initial_delay, self._retry.max_delay
