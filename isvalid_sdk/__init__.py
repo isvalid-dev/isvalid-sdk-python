@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import Optional
+
 from isvalid_sdk.client import HttpClient, IsValidConfig, RetryConfig
 from isvalid_sdk.errors import IsValidAuthError, IsValidError, IsValidRateLimitError
 from isvalid_sdk.namespaces.au import AuNamespace
@@ -94,7 +98,7 @@ class IsValid:
             {"value": value, "checkMx": str(check_mx).lower() if check_mx else None},
         )
 
-    def iban(self, value: str, *, country_code: str | None = None) -> IbanResponse:
+    def iban(self, value: str, *, country_code: Optional[str] = None) -> IbanResponse:
         return self._client.get(
             "/v0/iban", {"value": value, "countryCode": country_code}
         )
@@ -109,7 +113,7 @@ class IsValid:
         self,
         value: str,
         *,
-        country_code: str | None = None,
+        country_code: Optional[str] = None,
         check_vies: bool = False,
     ) -> VatResponse:
         return self._client.get(
@@ -124,7 +128,7 @@ class IsValid:
     def gps(self, value: str) -> GpsResponse:
         return self._client.get("/v0/gps", {"value": value})
 
-    def phone(self, value: str, *, country_code: str | None = None) -> PhoneResponse:
+    def phone(self, value: str, *, country_code: Optional[str] = None) -> PhoneResponse:
         return self._client.get(
             "/v0/phone", {"value": value, "countryCode": country_code}
         )
@@ -156,7 +160,7 @@ class IsValid:
     def nuts(self, value: str) -> NutsResponse:
         return self._client.get("/v0/nuts", {"value": value})
 
-    def uuid(self, value: str, *, version: int | None = None) -> UuidResponse:
+    def uuid(self, value: str, *, version: Optional[int] = None) -> UuidResponse:
         return self._client.get(
             "/v0/uuid",
             {"value": value, "version": str(version) if version is not None else None},
@@ -180,14 +184,14 @@ class IsValid:
     def boolean(self, value: str) -> BooleanResponse:
         return self._client.get("/v0/boolean", {"value": value})
 
-    def date(self, value: str, *, format: str | None = None) -> DateResponse:
+    def date(self, value: str, *, format: Optional[str] = None) -> DateResponse:
         return self._client.get("/v0/date", {"value": value, "format": format})
 
     def btc_address(self, value: str) -> BtcAddressResponse:
         return self._client.get("/v0/btc-address", {"value": value})
 
     def postal_code(
-        self, value: str, *, country_code: str | None = None
+        self, value: str, *, country_code: Optional[str] = None
     ) -> PostalCodeResponse:
         return self._client.get(
             "/v0/postal-code", {"value": value, "countryCode": country_code}
