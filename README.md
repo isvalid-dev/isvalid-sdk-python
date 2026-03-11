@@ -19,7 +19,7 @@ pip install isvalid-sdk
 
 ## Quick Start
 
-Get your free API key at [isvalid.dev/getting-started](https://isvalid.dev/getting-started).
+Get your free API key at [isvalid.dev/getting-started-python](https://isvalid.dev/getting-started-python).
 
 ```python
 from isvalid_sdk import IsValidConfig, create_client
@@ -46,6 +46,8 @@ with create_client(IsValidConfig(api_key="your-api-key")) as iv:
 
 ## Namespaced Methods
 
+Some endpoints support callable + property access pattern:
+
 ```python
 # LEI
 lei = iv.lei("5493001KJTIIGC8Y1R12")
@@ -67,6 +69,47 @@ flight = iv.iata.flight("LH1234")
 airline = iv.iata.airline("LH")
 airlines = iv.iata.airline.list()
 airport = iv.iata.airport("WAW")
+
+# Timezone
+tz = iv.timezone("Europe/Warsaw")
+# => {"valid": True, "timezone": "Europe/Warsaw", "utcOffset": "+01:00", "abbreviation": "CET", "isDST": False}
+timezones = iv.timezone.list(region="Europe")
+
+# MIME Type
+mime = iv.mime_type("application/json")
+# => {"valid": True, "mime": "application/json", "type": "application", "subtype": "json", "extensions": ["json"], ...}
+by_ext = iv.mime_type.ext("pdf")
+mimes = iv.mime_type.list(type="image")
+
+# HTTP Status
+status = iv.http_status("404")
+# => {"valid": True, "code": 404, "reasonPhrase": "Not Found", "category": "client-error"}
+statuses = iv.http_status.list()
+
+# SWIFT MT
+mt = iv.swift_mt("MT103")
+# => {"valid": True, "type": "MT103", "category": 1, "group": "Customer Payments & Cheques", ...}
+mt_list = iv.swift_mt.list(category=1)
+
+# UN/LOCODE
+locode = iv.locode("PLWAW")
+# => {"valid": True, "locode": "PLWAW", "country": "PL", "name": "Warszawa", "found": True, ...}
+locodes = iv.locode.list(country="PL")
+
+# HS Code (Harmonized System)
+hs = iv.hs_code("8471")
+# => {"valid": True, "code": "8471", "level": "heading", "description": "...", ...}
+hs_list = iv.hs_code.list(chapter="84", level="heading")
+
+# GS1 Prefix
+gs1 = iv.gs1_prefix("590")
+# => {"valid": True, "prefix": "590", "country": "Poland"}
+gs1_list = iv.gs1_prefix.list()
+
+# Industry (NAICS / NACE)
+ind = iv.industry("5112", system="naics")
+# => {"valid": True, "system": "NAICS", "code": "5112", "description": "...", ...}
+ind_list = iv.industry.list(system="naics", level="sector")
 ```
 
 ## Country-Specific Endpoints
@@ -95,6 +138,9 @@ iv.gb.sort_code("12-34-56")
 # Network
 iv.net.ip("192.168.1.1")
 iv.net.mac("00:1B:44:11:3A:B7")
+iv.net.port("443")
+# => {"valid": True, "port": 443, "range": "well-known", "serviceName": "HTTPS", ...}
+ports = iv.net.port.list()
 
 # Financial
 iv.isin("US0378331005")
@@ -124,6 +170,11 @@ iv.postal_code(value, country_code=)
 iv.aba(value)                   iv.container_code(value)
 iv.sscc(value)                  iv.gln(value)
 iv.qr(value)                    iv.credit_card(number)
+iv.cas(value)                   iv.eori(value, check=)
+iv.orcid(value, lookup=)        iv.doi(value, lookup=)
+iv.barcode(value, type=)        iv.base64(value)
+iv.eth_address(value)           iv.cron(value)
+iv.domain(value)                iv.regex(pattern, flags=)
 ```
 
 ## Configuration

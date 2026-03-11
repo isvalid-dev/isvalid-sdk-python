@@ -10,27 +10,43 @@ from isvalid_sdk.namespaces.country import CountryNamespace
 from isvalid_sdk.namespaces.currency import CurrencyNamespace
 from isvalid_sdk.namespaces.es import EsNamespace
 from isvalid_sdk.namespaces.gb import GbNamespace
+from isvalid_sdk.namespaces.gs1_prefix import Gs1PrefixNamespace
+from isvalid_sdk.namespaces.hs_code import HsCodeNamespace
+from isvalid_sdk.namespaces.http_status import HttpStatusNamespace
 from isvalid_sdk.namespaces.iata import IataNamespace
 from isvalid_sdk.namespaces.india import InNamespace
+from isvalid_sdk.namespaces.industry import IndustryNamespace
 from isvalid_sdk.namespaces.language import LanguageNamespace
 from isvalid_sdk.namespaces.lei import LeiNamespace
+from isvalid_sdk.namespaces.locode import LocodeNamespace
+from isvalid_sdk.namespaces.mime_type import MimeTypeNamespace
 from isvalid_sdk.namespaces.net import NetNamespace
 from isvalid_sdk.namespaces.pl import PlNamespace
+from isvalid_sdk.namespaces.swift_mt import SwiftMtNamespace
+from isvalid_sdk.namespaces.timezone import TimezoneNamespace
 from isvalid_sdk.namespaces.us import UsNamespace
 from isvalid_sdk.types.simple import (
     AbaResponse,
+    BarcodeResponse,
+    Base64Response,
     BicResponse,
     BooleanResponse,
     BtcAddressResponse,
+    CasResponse,
     CfiResponse,
     ColorResponse,
     ContainerCodeResponse,
     CreditCardResponse,
+    CronResponse,
     CusipResponse,
     DateResponse,
+    DoiResponse,
+    DomainResponse,
     DtiResponse,
     EanResponse,
     EmailResponse,
+    EoriResponse,
+    EthAddressResponse,
     GlnResponse,
     GpsResponse,
     IbanResponse,
@@ -41,9 +57,11 @@ from isvalid_sdk.types.simple import (
     JwtResponse,
     MicResponse,
     NutsResponse,
+    OrcidResponse,
     PhoneResponse,
     PostalCodeResponse,
     QrResponse,
+    RegexResponse,
     SemverResponse,
     SsccResponse,
     UrlResponse,
@@ -80,6 +98,14 @@ class IsValid:
         self.in_ = InNamespace(self._client)
         self.us = UsNamespace(self._client)
         self.gb = GbNamespace(self._client)
+        self.hs_code = HsCodeNamespace(self._client)
+        self.gs1_prefix = Gs1PrefixNamespace(self._client)
+        self.industry = IndustryNamespace(self._client)
+        self.timezone = TimezoneNamespace(self._client)
+        self.mime_type = MimeTypeNamespace(self._client)
+        self.http_status = HttpStatusNamespace(self._client)
+        self.swift_mt = SwiftMtNamespace(self._client)
+        self.locode = LocodeNamespace(self._client)
 
     def close(self) -> None:
         self._client.close()
@@ -214,6 +240,47 @@ class IsValid:
 
     def credit_card(self, number: str) -> CreditCardResponse:
         return self._client.post("/v0/credit-card", {"number": number})
+
+    def cas(self, value: str) -> CasResponse:
+        return self._client.get("/v0/cas", {"value": value})
+
+    def eori(self, value: str, *, check: bool = False) -> EoriResponse:
+        return self._client.get(
+            "/v0/eori",
+            {"value": value, "check": str(check).lower() if check else None},
+        )
+
+    def orcid(self, value: str, *, lookup: bool = False) -> OrcidResponse:
+        return self._client.get(
+            "/v0/orcid",
+            {"value": value, "lookup": str(lookup).lower() if lookup else None},
+        )
+
+    def doi(self, value: str, *, lookup: bool = False) -> DoiResponse:
+        return self._client.get(
+            "/v0/doi",
+            {"value": value, "lookup": str(lookup).lower() if lookup else None},
+        )
+
+    def barcode(self, value: str, *, type: Optional[str] = None) -> BarcodeResponse:
+        return self._client.get(
+            "/v0/barcode", {"value": value, "type": type}
+        )
+
+    def base64(self, value: str) -> Base64Response:
+        return self._client.get("/v0/base64", {"value": value})
+
+    def eth_address(self, value: str) -> EthAddressResponse:
+        return self._client.get("/v0/eth-address", {"value": value})
+
+    def cron(self, value: str) -> CronResponse:
+        return self._client.get("/v0/cron", {"value": value})
+
+    def domain(self, value: str) -> DomainResponse:
+        return self._client.get("/v0/domain", {"value": value})
+
+    def regex(self, pattern: str, *, flags: Optional[str] = None) -> RegexResponse:
+        return self._client.post("/v0/regex", {"pattern": pattern, "flags": flags})
 
 
 def create_client(config: IsValidConfig) -> IsValid:

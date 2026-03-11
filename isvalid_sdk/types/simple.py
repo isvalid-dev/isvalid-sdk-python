@@ -425,3 +425,146 @@ class CreditCardValidResponse(TypedDict):
 
 
 CreditCardResponse = Union[InvalidResponse, CreditCardValidResponse]
+
+
+class CasValidResponse(TypedDict):
+    valid: bool  # True
+    formatted: str
+
+
+CasResponse = Union[InvalidResponse, CasValidResponse]
+
+
+class EoriEc(TypedDict, total=False):
+    checked: bool
+    valid: bool
+    statusDescr: Optional[str]
+    name: Optional[str]
+    street: Optional[str]
+    postalCode: Optional[str]
+    city: Optional[str]
+    reason: str
+
+
+class EoriValidResponse(TypedDict, total=False):
+    valid: bool  # True
+    countryCode: str
+    country: str
+    identifier: str
+    formatted: str
+    ec: EoriEc
+
+
+EoriResponse = Union[InvalidResponse, EoriValidResponse]
+
+
+class OrcidProfile(TypedDict, total=False):
+    found: bool
+    givenNames: Optional[str]
+    familyName: Optional[str]
+    organization: Optional[str]
+    reason: str
+
+
+class OrcidValidResponse(TypedDict, total=False):
+    valid: bool  # True
+    formatted: str
+    uri: str
+    profile: OrcidProfile
+
+
+OrcidResponse = Union[InvalidResponse, OrcidValidResponse]
+
+
+class DoiMetadata(TypedDict, total=False):
+    found: bool
+    title: Optional[str]
+    authors: Optional[List[str]]
+    publisher: Optional[str]
+    type: Optional[str]
+    issued: Any
+    reason: str
+
+
+class DoiValidResponse(TypedDict, total=False):
+    valid: bool  # True
+    doi: str
+    prefix: str
+    suffix: str
+    registrantCode: str
+    registrant: str
+    url: str
+    metadata: DoiMetadata
+
+
+DoiResponse = Union[InvalidResponse, DoiValidResponse]
+
+
+class BarcodeValidResponse(TypedDict, total=False):
+    valid: bool  # True
+    type: str
+    data: str
+    hasCheckDigit: bool
+    checkDigitValid: Optional[bool]
+    encoding: str
+    indicator: str
+    length: int
+
+
+BarcodeResponse = Union[InvalidResponse, BarcodeValidResponse]
+
+
+class Base64ValidResponse(TypedDict):
+    valid: bool  # True
+    variant: str
+    isPadded: bool
+    decodedLength: int
+
+
+Base64Response = Union[InvalidResponse, Base64ValidResponse]
+
+
+class EthAddressValidResponse(TypedDict):
+    valid: bool  # True
+    address: str
+    isChecksumValid: bool
+
+
+EthAddressResponse = Union[InvalidResponse, EthAddressValidResponse]
+
+
+class CronValidResponse(TypedDict):
+    valid: bool  # True
+    expression: str
+    fields: int
+    hasSeconds: bool
+    humanReadable: Optional[str]
+    nextRun: str
+    nextRuns: List[str]
+
+
+CronResponse = Union[InvalidResponse, CronValidResponse]
+
+
+class DomainValidResponse(TypedDict):
+    valid: bool  # True
+    domain: str
+    tld: str
+    sld: Optional[str]
+    isIDN: bool
+    dnsValid: bool
+    hasA: bool
+    hasAAAA: bool
+
+
+DomainResponse = Union[InvalidResponse, DomainValidResponse]
+
+
+class RegexValidResponse(TypedDict, total=False):
+    valid: bool  # True
+    pattern: str
+    flags: Optional[str]
+    namedGroups: List[str]
+
+
+RegexResponse = Union[InvalidResponse, RegexValidResponse]

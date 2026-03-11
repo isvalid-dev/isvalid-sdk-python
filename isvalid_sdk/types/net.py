@@ -26,3 +26,21 @@ class MacValidResponse(TypedDict):
 
 
 MacResponse = Union[InvalidResponse, MacValidResponse]
+
+
+class NetPortValidResponse(TypedDict, total=False):
+    valid: bool
+    port: int
+    protocol: str
+    serviceName: str
+    description: str
+
+
+NetPortResponse = Union[InvalidResponse, NetPortValidResponse]
+
+
+class NetPortListItem(TypedDict, total=False):
+    port: int
+    protocol: str
+    serviceName: str
+    description: str
