@@ -568,3 +568,49 @@ class RegexValidResponse(TypedDict, total=False):
 
 
 RegexResponse = Union[InvalidResponse, RegexValidResponse]
+
+
+class DunsLookup(TypedDict, total=False):
+    checked: bool
+    found: bool
+    reason: str
+    name: Optional[str]
+    countryCode: Optional[str]
+    city: Optional[str]
+    region: Optional[str]
+    postalCode: Optional[str]
+    street: Optional[str]
+    isActive: Optional[bool]
+
+
+class DunsValidResponse(TypedDict, total=False):
+    valid: bool  # True
+    formatted: str
+    duns: DunsLookup
+
+
+DunsResponse = Union[InvalidResponse, DunsValidResponse]
+
+
+class TimestampValidResponse(TypedDict, total=False):
+    valid: bool  # True
+    type: str
+    date: str
+    time: str
+    utcOffset: Optional[str]
+    utc: Optional[str]
+    week: str
+    ordinal: str
+    years: float
+    months: float
+    weeks: float
+    days: float
+    hours: float
+    minutes: float
+    seconds: float
+    totalSeconds: float
+    start: Dict[str, Any]
+    end: Dict[str, Any]
+
+
+TimestampResponse = Union[InvalidResponse, TimestampValidResponse]

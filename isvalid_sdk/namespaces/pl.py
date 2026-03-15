@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from isvalid_sdk.client import HttpClient
-from isvalid_sdk.types.pl import KrsResponse, PeselResponse, RegonResponse
+from isvalid_sdk.types.pl import CeidgResponse, KrsResponse, PeselResponse, PkdResponse, RegonResponse
 
 
 class PlNamespace:
@@ -22,3 +22,12 @@ class PlNamespace:
             "/v0/pl/krs",
             {"value": value, "lookup": str(lookup).lower() if lookup else None},
         )
+
+    def ceidg(self, value: str, *, lookup: bool = False) -> CeidgResponse:
+        return self._client.get(
+            "/v0/pl/ceidg",
+            {"value": value, "lookup": str(lookup).lower() if lookup else None},
+        )
+
+    def pkd(self, value: str) -> PkdResponse:
+        return self._client.get("/v0/pl/pkd", {"value": value})

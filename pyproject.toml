@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "isvalid-sdk"
-version = "0.3.0"
+version = "0.4.0"
 description = "Python SDK for the isvalid.dev validation API"
 readme = "README.md"
 license = "MIT"
@@ -12,11 +12,16 @@ requires-python = ">=3.9"
 authors = [{ name = "isvalid.dev" }]
 keywords = [
     "validation", "api", "sdk", "isvalid",
-    "iban", "lei", "isin", "vat", "email",
-    "cas", "eori", "orcid", "doi", "barcode",
-    "base64", "eth-address", "cron", "domain", "regex",
-    "hs-code", "gs1", "industry", "timezone", "mime-type",
-    "http-status", "swift-mt", "locode", "port",
+    "email", "iban", "vat", "phone",
+    "lei", "isin", "dti", "bic", "mic", "cfi", "cusip",
+    "eori", "orcid", "doi", "duns", "nuts",
+    "country", "currency", "language",
+    "iata", "timezone", "mime-type", "http-status",
+    "swift-mt", "locode", "hs-code", "gs1",
+    "industry", "naics", "nace",
+    "postal-code", "net-port",
+    "pesel", "regon", "krs", "ceidg", "pkd",
+    "timestamp",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",

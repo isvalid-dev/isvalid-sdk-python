@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Optional, Union
+from typing import List, Optional, Union
 
 from typing_extensions import TypedDict
 
@@ -80,3 +80,48 @@ class KrsValidResponse(TypedDict, total=False):
 
 
 KrsResponse = Union[InvalidResponse, KrsValidResponse]
+
+
+class CeidgLookup(TypedDict, total=False):
+    checked: bool
+    found: bool
+    reason: str
+    status: Optional[str]
+    firstName: Optional[str]
+    lastName: Optional[str]
+    businessName: Optional[str]
+    regon: Optional[str]
+    city: Optional[str]
+    postalCode: Optional[str]
+    street: Optional[str]
+    houseNumber: Optional[str]
+    flatNumber: Optional[str]
+    startDate: Optional[str]
+    pkd: List[str]
+    primaryPkd: Optional[str]
+
+
+class CeidgValidResponse(TypedDict, total=False):
+    valid: bool  # True
+    nip: str
+    ceidg: CeidgLookup
+
+
+CeidgResponse = Union[InvalidResponse, CeidgValidResponse]
+
+
+class PkdValidResponse(TypedDict, total=False):
+    valid: bool  # True
+    code: str
+    name: str
+    section: str
+    sectionName: str
+    division: str
+    divisionName: Optional[str]
+    group: str
+    groupName: Optional[str]
+    className: Optional[str]
+    # Note: JSON response also contains "class" key — accessible via result["class"]
+
+
+PkdResponse = Union[InvalidResponse, PkdValidResponse]

@@ -119,6 +119,8 @@ ind_list = iv.industry.list(system="naics", level="sector")
 iv.pl.pesel("44051401358")
 iv.pl.regon("012345678", lookup=True)
 iv.pl.krs("0000123456", lookup=True)
+iv.pl.ceidg("5252344078", lookup=True)
+iv.pl.pkd("62.01.Z")
 
 # Brazil
 iv.br.cnpj("11.222.333/0001-81")
@@ -175,6 +177,7 @@ iv.orcid(value, lookup=)        iv.doi(value, lookup=)
 iv.barcode(value, type=)        iv.base64(value)
 iv.eth_address(value)           iv.cron(value)
 iv.domain(value)                iv.regex(pattern, flags=)
+iv.duns(value, lookup=)         iv.timestamp(value)
 ```
 
 ## Configuration

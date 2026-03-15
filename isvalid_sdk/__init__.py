@@ -43,6 +43,7 @@ from isvalid_sdk.types.simple import (
     DoiResponse,
     DomainResponse,
     DtiResponse,
+    DunsResponse,
     EanResponse,
     EmailResponse,
     EoriResponse,
@@ -64,6 +65,7 @@ from isvalid_sdk.types.simple import (
     RegexResponse,
     SemverResponse,
     SsccResponse,
+    TimestampResponse,
     UrlResponse,
     UuidResponse,
     VatResponse,
@@ -281,6 +283,15 @@ class IsValid:
 
     def regex(self, pattern: str, *, flags: Optional[str] = None) -> RegexResponse:
         return self._client.post("/v0/regex", {"pattern": pattern, "flags": flags})
+
+    def duns(self, value: str, *, lookup: bool = False) -> DunsResponse:
+        return self._client.get(
+            "/v0/duns",
+            {"value": value, "lookup": str(lookup).lower() if lookup else None},
+        )
+
+    def timestamp(self, value: str) -> TimestampResponse:
+        return self._client.get("/v0/timestamp", {"value": value})
 
 
 def create_client(config: IsValidConfig) -> IsValid:
